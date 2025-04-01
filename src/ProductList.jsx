@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,  useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { addItem, removeItem, updateQuantity } from './CartSlice';
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
@@ -9,7 +9,10 @@ function ProductList({ onHomeClick }) {
     const [addedToCart,setAddedToCart] = useState({});
     const dispatch = useDispatch()
     const [cartCount,setCartCount] = useState(0);
-    
+    const cartItems=useSelector(state => state.cart.items);
+    const alreadyInCart = (itemName) => {
+        return cartItems.some((item) => item.name === itemName);
+    }
     
     const plantsArray = [
         {
@@ -301,7 +304,7 @@ function ProductList({ onHomeClick }) {
                                             <span>{plant.cost}</span>
                                             <p >{plant.description}</p>
                                         </div>
-                                        <button className="product-button" disabled={addedToCart[plant.name]}  onClick={()=>handleAddToCart(plant)}>{addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}</button>
+                                        <button className="product-button" style={{backgroundColor:alreadyInCart(plant.name)?"gray":"green"}} disabled={alreadyInCart(plant.name)? true:false}  onClick={()=>handleAddToCart(plant)}>{alreadyInCart(plant.name)? 'Added to Cart' : 'Add to Cart'}</button>
 
                                     </div>
                                 ))}
