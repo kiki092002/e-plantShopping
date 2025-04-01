@@ -10,6 +10,7 @@ function ProductList({ onHomeClick }) {
     const dispatch = useDispatch()
     const [cartCount,setCartCount] = useState(0);
     
+    
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -300,7 +301,7 @@ function ProductList({ onHomeClick }) {
                                             <span>{plant.cost}</span>
                                             <p >{plant.description}</p>
                                         </div>
-                                        <button className="product-button" onClick={()=>handleAddToCart(plant)}>Add to Cart</button>
+                                        <button className="product-button" disabled={addedToCart[plant.name]}  onClick={()=>handleAddToCart(plant)}>{addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}</button>
 
                                     </div>
                                 ))}
